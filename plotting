@@ -32,7 +32,11 @@ plot(tout{1,21}(1,:), xout{1,21}(:,8), 'Color', [210, 105, 45]./255, 'Linewidth'
 grid on
 box on
 
-axis([0 2.5 0.8 1.1])
+% edit based on rhe range of axis you want to have
+% it goes lower x -> higher x , lower y -> higher y
+%axis([0 2.5 0.8 1.1])
+
+
 ax = gca;
 ax.FontSize = 13;
 ax.FontName = 'Serif';
