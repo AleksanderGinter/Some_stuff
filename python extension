@@ -1,9 +1,11 @@
-import numpy as np
-import matplotlib.pyplot as plt
+Gc_start = 1
+Gc_end = 3
 
-for i in range(1, 22):
+
+for i in range(Gc_start, (Gc_end - Gc_start)*10 + 2):
     print("plot(tout{1," + "{0}".format(str(i)) + "}(1,:), xout{1," + "{0}".format(str(i)) +
           "}(:,8), 'Color', " + "[{0}, {1}, {2}]./255, ".format(str(10*i), str(5*i), str(255 - 10*i)) + "'Linewidth', 1.5)")
 
-for i in range(1,22):
-    print(" '\psi Gc = {}', ...".format(str(0.9 + i/10)))
+
+for i in range(Gc_start, (Gc_end - Gc_start)*10 + 2):
+    print(" '\psi Gc = {}', ...".format(Gc_start + ((i - 1)/10)))
