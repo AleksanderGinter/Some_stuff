@@ -1,0 +1,71 @@
+% Simulation of a rover turning system.
+clear
+
+global Bs Gc L Jm Jw Kd Ke Ks Kt Kv Ky R Rm Rw Vd Vt;
+
+% variables
+Bs = 0.05;
+Gc = 1.9;
+Jm = 0.003;
+Jw = 0.001;
+Kc = 1.9;
+Kd = 8.9;
+Ke = 0.35;
+Kh = 1.9;
+Ks = 9.81;
+Kt = 0.35;
+Kv = 0.9;
+Ky = 8.9;
+L = 0.1;
+R = 4;
+Rm = 0.124;
+Rw = 0.064;
+Vd = 2.1;
+Vt = 0.75;
+% Ki = 0.1;
+psi_ref = 0.9599;
+init_yaw = -0.0873;
+
+
+%change range of Gc
+for Gc = 1:0.1:3
+
+    temp = int8(10*Gc - 9) ;
+% Define parameters for the simulation
+ 
+    stepsize = 0.002;				% Integration step size
+    comminterval = 0.002;			% Communications interval
+    EndTime = 10;					% Duration of the simulation (final time)
+    i = 0;							% Initialise counter for data storage
+    
+    
+    % array of initial conditions for states and state derivatives
+    x = [0, 0, 0, 0, 0, 0, 0, init_yaw, 0]';
+    xdot = [0, 0, 0, 0, 0, 0, 0, 0, 0]';
+
+
+    % calculate delta voltage DV
+    DV = Gc * (Kc * psi_ref - Kh * x(8));
+    
+    for time = 0:stepsize:EndTime
+        if rem(time,comminterval)==0
+          
+            i = i+1;					% increment counter 
+    
+            tout{temp}(i) = time;	 	% store time
+            xout{temp}(i,:) = x;		% store states
+            xdout{temp}(i,:) = xdot;	% store state derivatives
+          
+        end
+    
+    % calculate delta voltage DV   
+    DV = Gc * (Kc * psi_ref - Kh * x(8));
+    % derivative eqs
+    
+    xdot = rover_model(x, DV);
+    
+    % integration -> for now
+    
+    x = integration("rover_model", stepsize, x, DV);
+    end
+end
