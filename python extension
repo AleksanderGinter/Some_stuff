@@ -1,4 +1,4 @@
-Gc_start = 1
+Gc_start = 1            %works only for integers for initial Gc, you will maange, sorry!
 Gc_end = 3
 
 
